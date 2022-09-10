@@ -205,7 +205,7 @@ def prevPage():
 def nextBook():
     global book
     global bookNum
-    if bookNum < len(bookNameList): 
+    if bookNum < (len(bookNameList)-1): 
         bookNum +=1
     book = bookNameList[bookNum]
 
