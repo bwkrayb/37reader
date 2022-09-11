@@ -36,6 +36,7 @@ pageNum = 0
 bookNum = 0
 bookLen = 0
 mechButton = 0
+lightState = [False,False,False,False]
 books_dir='books/'
 cache_dir='cache/'
 bookNameList = []
@@ -215,7 +216,15 @@ def prevBook():
     if bookNum > 0:
         bookNum -=1
     book = bookNameList[bookNum]
-    
+   
+def sideLight():
+    if lightState[1]:
+        neokey.pixels[1] = 0x0
+        lightState[1] = False
+    else:
+        neokey.pixels[1] = 0xFFFF00
+        lightState[1] = True
+ 
 def handleBtnPress(btn):
     if btn.pin.number == 5:
         printPage(pageNum)
@@ -231,6 +240,7 @@ def handleBtnPress(btn):
 def handleBtnPress2(btn):
     if btn == 0:
         printPage(pageNum)
+        sideLight()
     if btn == 1:
         prevPage()
         printPage(pageNum)
@@ -294,6 +304,9 @@ def pageTurnLoop():
     global mechButton
     printPage(pageNum)
     while True:
+        if neokey[0]:
+            sideLight()
+            sleep(1)
         #btn2.when_pressed = handleBtnPress
         if neokey[1]:
             mechButton = 1
